@@ -27,9 +27,7 @@ module AttrEnumerator
         scope formatted_choice, lambda { where(field => choice) } if respond_to? :scope
       end
 
-      options[:message] ||= :invalid
-
-      validates_inclusion_of field, options.merge(:in => choices)
+      validates_inclusion_of field, :in => choices
     end
   end
 end
