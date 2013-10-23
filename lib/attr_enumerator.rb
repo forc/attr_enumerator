@@ -12,25 +12,23 @@ module AttrEnumerator
       raw_prefix = options.delete(:prefix)
 
       prefix = case raw_prefix
-      when false, '' then ''
-      when nil then field.to_s + '_'
-      else raw_prefix.to_s + '_'
-      end
+               when false, '' then ''
+               when nil then field.to_s + '_'
+               else raw_prefix.to_s + '_'
+               end
 
       choices.each do |choice|
         formatted_choice = prefix + choice.to_s.underscore.parameterize('_')
 
-        define_method(formatted_choice + '?') { send(field) == choice }
-        
-        if self.respond_to? :scope        
-          scope formatted_choice, where(field => choice) if respond_to? :scope
-        elsif self.respond_to? :named_scope
-          named_scope formatted_choice, :conditions => {field => choice}
+        define_method(formatted_choice + '?') do
+          send(field) == choice
         end
+
+        scope formatted_choice, lambda { where(field => choice) } if respond_to? :scope
       end
 
       options[:message] ||= :invalid
-      
+
       validates_inclusion_of field, options.merge(:in => choices)
     end
   end

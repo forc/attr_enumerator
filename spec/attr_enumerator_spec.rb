@@ -37,14 +37,14 @@ describe "AttrEnumerator" do
       it "should have a default message" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         instance.valid?
-        instance.errors.should == {:choice => ['is invalid']}
+        instance.errors[:choice].should == ['is invalid']
       end
 
       it "should allow for a custom message" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :message => '%{value} is not a valid color'
         instance.choice = 'green'
         instance.valid?
-        instance.errors.should == {:choice => ['green is not a valid color']}
+        instance.errors[:choice].should == ['green is not a valid color']
       end
 
       it "should handle allow_blank" do
