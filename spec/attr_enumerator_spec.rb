@@ -22,43 +22,43 @@ describe "AttrEnumerator" do
     end
 
     context "validation" do
-      it "should pass when the value is one of the choices" do
+      it "passes when the value is one of the choices" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         instance.choice = 'blue'
         instance.should be_valid
       end
 
-      it "should fail when the value is not one of the choices" do
+      it "fails when the value is not one of the choices" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         instance.choice = 'green'
         instance.should_not be_valid
       end
 
-      it "should have a default message" do
+      it "has a default message of 'is invalid'" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
 
-        # TODO
+        flunk # TODO
       end
 
-      it "should allow for a custom message" do
+      it "supports a custom message" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :message => '%{value} is not a valid color'
 
-        # TODO
+        flunk # TODO
       end
 
-      it "should handle allow_blank" do
+      it "supports allow_blank" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :allow_blank => true
 
-        # TODO
+        flunk # TODO
       end
 
-      it "should handle allow_nil" do
+      it "supports allow_nil" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :allow_nil => true
 
-        # TODO
+        flunk # TODO
       end
 
-      it "should handle symbol enumerations distinctively from strings" do
+      it "handles symbol enumerations distinctively from strings" do
         TestModel.attr_enumerator :choice, [:red, :blue]
 
         instance.choice = :red
@@ -72,29 +72,29 @@ describe "AttrEnumerator" do
     end
 
     context "class constant" do
-      it "should create a constant" do
+      it "creates a constant" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         TestModel::CHOICES.should == ['red', 'blue']
       end
 
-      it "should freeze the constant to prevent editing" do
+      it "freezes the constant to prevent editing" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         TestModel::CHOICES.should be_frozen
       end
 
-      it "should allow for a custom constant name using a symbol" do
+      it "allows for a custom constant name using a symbol" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :constant => :POSSIBLE_COLORS
         TestModel::POSSIBLE_COLORS.should == ['red', 'blue']
       end
 
-      it "should allow for a custom constant name using a string" do
+      it "allow for a custom constant name using a string" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :constant => 'POSSIBLE_COLORS'
         TestModel::POSSIBLE_COLORS.should == ['red', 'blue']
       end
     end
 
     context "methods" do
-      it "should create methods for each enumeration" do
+      it "creates methods for each enumeration" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         instance.choice = 'red'
 
@@ -105,7 +105,7 @@ describe "AttrEnumerator" do
         instance.should_not be_choice_blue
       end
 
-      it "should create methods with friendly names" do
+      it "creates methods with friendly names" do
         enumerations = {
           :has_space? => 'has space',
           :has_dash? => 'has-dash',
@@ -122,7 +122,7 @@ describe "AttrEnumerator" do
         end
       end
 
-      it "should allow for a custom prefix" do
+      it "supports a custom prefix" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :prefix => 'colored'
         instance.choice = 'red'
 
@@ -133,7 +133,7 @@ describe "AttrEnumerator" do
         instance.should_not be_colored_blue
       end
 
-      it "should allow for no prefix" do
+      it "supporst having no prefix" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :prefix => false
         instance.choice = 'red'
 
@@ -153,22 +153,22 @@ describe "AttrEnumerator" do
       end
     end
 
-    it "should automatically be included in ActiveRecord::Base" do
+    it "automatically gets included in ActiveRecord::Base" do
       ActiveRecord::Base.should respond_to :attr_enumerator
     end
 
     describe "scopes" do
-      it "should create a scope for each enumeration" do
+      it "creates a scope for each enumeration" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
         TestModel.choice_red.should be_a ActiveRecord::Relation
       end
 
-      it "should create a scope for each enumeration with custom prefix " do
+      it "creates a scope for each enumeration with custom prefix " do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :prefix => 'colored'
         TestModel.colored_red.should be_a ActiveRecord::Relation
       end
 
-      it "should create a scope for each enumeration without prefix " do
+      it "creates a scope for each enumeration without prefix " do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :prefix => false
         TestModel.red.should be_a ActiveRecord::Relation
       end
