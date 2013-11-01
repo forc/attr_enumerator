@@ -35,25 +35,25 @@ describe "AttrEnumerator" do
       it "has a default message of 'is invalid'" do
         TestModel.attr_enumerator :choice, ['red', 'blue']
 
-        flunk # TODO
+        pending # TODO
       end
 
       it "supports a custom message" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :message => '%{value} is not a valid color'
 
-        flunk # TODO
+        pending # TODO
       end
 
       it "supports allow_blank" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :allow_blank => true
 
-        flunk # TODO
+        pending # TODO
       end
 
       it "supports allow_nil" do
         TestModel.attr_enumerator :choice, ['red', 'blue'], :allow_nil => true
 
-        flunk # TODO
+        pending # TODO
       end
 
       it "handles symbol enumerations distinctively from strings" do
