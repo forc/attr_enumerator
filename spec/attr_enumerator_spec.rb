@@ -1,9 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "AttrEnumerator" do
-  def instance
-    @instance ||= TestModel.new
-  end
+  subject(:instance){ TestModel.new }
 
   after(:each) do
     begin
